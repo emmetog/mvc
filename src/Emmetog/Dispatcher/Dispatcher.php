@@ -31,9 +31,9 @@ class Dispatcher
     /**
      * Dispatches a controller.
      * 
-     * @param string $controllerName The name of the controller to execute.
+     * @param string $controllerClass The fully qualified name (including namespaces) of the controller class to execute.
      */
-    public function dispatch($controllerName)
+    public function dispatch($controllerClass)
     {
 //        $router = new Router();
 //
@@ -60,7 +60,7 @@ class Dispatcher
 
         try
         {
-            $controller->execute($route);
+            $controller->execute();
         }
         catch (\Exception $e)
         {

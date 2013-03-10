@@ -26,7 +26,7 @@ abstract class WebController extends Controller
         parent::__construct($config);
     }
 
-    final public function execute(Route $route)
+    final public function execute()
     {
         $this->cache = $this->config->getCache();
 
