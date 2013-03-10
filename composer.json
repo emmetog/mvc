@@ -1,0 +1,21 @@
+{
+    "name": "emmetog/mvc",
+    "description": "A library of components for an MVC framework ",
+    "license": "GPL-3.0",
+    "keywords": ["mvc", "model", "view", "controller", "framework", "dispatcher", "router"],
+    "authors": [
+        {
+            "name": "Emmet O'Grady",
+            "email": "emmet789@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Emmetog\\Controller\\": "src" },
+        "psr-0": { "Emmetog\\Dispatcher\\": "src" },
+        "psr-0": { "Emmetog\\Exception\\": "src" },
+        "psr-0": { "Emmetog\\InputFilter\\": "src" },
+        "psr-0": { "Emmetog\\Model\\": "src" },
+        "psr-0": { "Emmetog\\Router\\": "src" },
+        "psr-0": { "Emmetog\\View\\": "src" }
+    }
+}
