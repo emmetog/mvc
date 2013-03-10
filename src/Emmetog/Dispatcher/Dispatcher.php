@@ -56,7 +56,15 @@ class Dispatcher
 //
 //        $controllerClass = '\\' . $this->config->getConfiguration('application', 'app_namespace')
 //                . '\\Controller\\' . $route->getController() . '\\' . $route->getAction();
-        $controller = $this->config->getClass($controllerClass);
+
+        try
+        {
+            $controller = $this->config->getClass($controllerClass);
+        }
+        catch (ConfigClassNotFoundException $e)
+        {
+            echo 'Requested controller does not exist: ' . $e->getMessage();
+        }
 
         try
         {
