@@ -10,12 +10,14 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Emmetog\\Controller\\": "src" },
-        "psr-0": { "Emmetog\\Dispatcher\\": "src" },
-        "psr-0": { "Emmetog\\Exception\\": "src" },
-        "psr-0": { "Emmetog\\InputFilter\\": "src" },
-        "psr-0": { "Emmetog\\Model\\": "src" },
-        "psr-0": { "Emmetog\\Router\\": "src" },
-        "psr-0": { "Emmetog\\View\\": "src" }
+        "psr-0": {
+	    "Emmetog\\Controller\\": "src",
+	    "Emmetog\\Dispatcher\\": "src",
+	    "Emmetog\\Exception\\": "src",
+	    "Emmetog\\InputFilter\\": "src",
+	    "Emmetog\\Model\\": "src",
+	    "Emmetog\\Router\\": "src",
+	    "Emmetog\\View\\": "src"
+	}
     }
 }
