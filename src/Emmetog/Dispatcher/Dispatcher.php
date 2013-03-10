@@ -1,6 +1,8 @@
 <?php
 
-namespace Apl\Dispatcher;
+namespace Emmetog\Dispatcher;
+
+use Emmetog\Config\Config;
 
 /**
  * The Dispatcher collects the input parameters and uses the Router to
@@ -12,45 +14,48 @@ class Dispatcher
     /**
      * The config object
      * 
-     * @var \Apl\Config\Config
+     * @var Config
      */
     public $config;
-    
+
     /**
      * Sets up the dispatcher.
      * 
-     * @param \Apl\Config\Config $config
-     * @param \Apl\Cache\CacheInterface $cache
+     * @param Config $config
      */
-    public function __construct(\Apl\Config\Config $config)
+    public function __construct(Config $config)
     {
         $this->config = $config;
-        $this->cache = $cache;
     }
 
-    public function dispatch()
+    /**
+     * Dispatches a controller.
+     * 
+     * @param string $controllerName The name of the controller to execute.
+     */
+    public function dispatch($controllerName)
     {
-        $router = new \Apl\Router\Router();
-
-        $routes = $this->config->getConfiguration('routes', 'routes');
-
-        foreach ($routes as $target => $pattern)
-        {
-            $router->map($target, $pattern);
-        }
-        
-        $route = \Apl\InputFilter\FilterGet::getFilteredInput('route', 'filterString');
-        $route = ( $route ) ? $route : '';
-        
-        $route = $router->match(strtolower($route));
-        
-        if (!$route)
-        {
-            die('Invalid route');
-        }
-
-        $controllerClass = '\\' . $this->config->getConfiguration('application', 'app_namespace')
-                . '\\Controller\\' . $route->getController() . '\\' . $route->getAction();
+//        $router = new Router();
+//
+//        $routes = $this->config->getConfiguration('routes', 'routes');
+//
+//        foreach ($routes as $target => $pattern)
+//        {
+//            $router->map($target, $pattern);
+//        }
+//        
+//        $route = \Apl\InputFilter\FilterGet::getFilteredInput('route', 'filterString');
+//        $route = ( $route ) ? $route : '';
+//        
+//        $route = $router->match(strtolower($route));
+//        
+//        if (!$route)
+//        {
+//            die('Invalid route');
+//        }
+//
+//        $controllerClass = '\\' . $this->config->getConfiguration('application', 'app_namespace')
+//                . '\\Controller\\' . $route->getController() . '\\' . $route->getAction();
         $controller = $this->config->getClass($controllerClass);
 
         try
@@ -60,7 +65,7 @@ class Dispatcher
         catch (\Exception $e)
         {
             // TODO: load the '500 internal error' template (dont exit in the exception)
-            echo 'Internal Server Error: '.$e->getMessage();
+            echo 'Internal Server Error: ' . $e->getMessage();
         }
     }
 
