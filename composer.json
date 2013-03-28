@@ -9,10 +9,11 @@
             "email": "emmet789@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "emmetog/config":		    "@dev",
-        "emmetog/cache":		    "@dev"
+        "emmetog/cache":		    "@dev",
+	"twig/twig":                        "~1.12.0"
     },
     "repositories": [
 	{
