@@ -5,6 +5,7 @@ namespace Emmetog\Controller;
 use Emmetog\Controller\Controller;
 use Emmetog\Router\Route;
 use Emmetog\View\ViewInterface;
+use Emmetog\View\TwigView;
 use Emmetog\Cache\CacheInterface;
 
 abstract class WebController extends Controller
@@ -120,7 +121,7 @@ abstract class WebController extends Controller
      */
     protected function render($variables, $template)
     {
-        $this->view = new \Apl\View\TwigView($this->config);
+        $this->view = new TwigView($this->config);
 
         foreach ($variables as $variableName => $variableValue)
         {
