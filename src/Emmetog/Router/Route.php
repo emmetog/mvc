@@ -6,28 +6,32 @@ class Route
 {
 
     protected $controller;
-    protected $action;
     protected $originalUrl;
     protected $routeName;
     protected $parsedParams;
     protected $requestMethod;
-
-    public function __construct($controller, $action, $parsedParams, $originalUrl)
+    
+    public function setController($controller)
     {
         $this->controller = $controller;
-        $this->action = $action;
+        return $this;
+    }
+    
+    public function setOriginalUrl($originalUrl)
+    {
         $this->originalUrl = $originalUrl;
-        $this->parsedParams = $parsedParams;
+        return $this;
+    }
+    
+    public function setParams(array $params)
+    {
+        $this->parsedParams = $params;
+        return $this;
     }
 
     public function getController()
     {
         return $this->controller;
-    }
-
-    public function getAction()
-    {
-        return $this->action;
     }
 
     public function getOriginalUrl()

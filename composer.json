@@ -9,6 +9,21 @@
             "email": "emmet789@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
+    "require": {
+        "emmetog/config":		    "@dev",
+        "emmetog/cache":		    "@dev"
+    },
+    "repositories": [
+	{
+            "type":                         "vcs",
+            "url":                          "https://github.com/emmetog/config.git"
+        },
+	{
+            "type":                         "vcs",
+            "url":                          "https://github.com/emmetog/cache.git"
+        }
+    ],
     "autoload": {
         "psr-0": {
 	    "Emmetog\\Controller\\": "src",
