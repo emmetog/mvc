@@ -73,11 +73,11 @@ class Router
     {
         if (empty($this->map))
         {
-            $this->setMap($config->getConfiguration('url_map'));
+            $this->setMap($this->config->getConfiguration('url_map'));
         }
         if (empty($this->placeholders))
         {
-            $this->setPlaceholders($config->getConfiguration('url_placeholders'));
+            $this->setPlaceholders($this->config->getConfiguration('url_placeholders'));
         }
 
 //        var_dump($this->map); die;
