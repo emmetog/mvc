@@ -29,16 +29,31 @@ class Router
      */
     private $config;
 
+    /**
+     * Creates a new instance of the Router.
+     * 
+     * @param Config $config
+     */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
+    /**
+     * Sets the map which relates controllers to url patterns.
+     * 
+     * @param array $map
+     */
     public function setMap(array $map)
     {
         $this->map = $map;
     }
 
+    /**
+     * Sets the placeholders which will be replaced in the patterns.
+     * 
+     * @param array $placeholders
+     */
     public function setPlaceholders(array $placeholders)
     {
         $this->placeholders = $placeholders;
@@ -56,7 +71,23 @@ class Router
      */
     public function generate($routeName, array $params = array())
     {
-        throw new \BadMethodCallException('This method is not yet implemented!');
+        if (empty($this->map))
+        {
+            $this->setMap($config->getConfiguration('url_map'));
+        }
+        if (empty($this->placeholders))
+        {
+            $this->setPlaceholders($config->getConfiguration('url_placeholders'));
+        }
+
+//        var_dump($this->map); die;
+
+        if (!isset($this->map[$routeName]))
+        {
+            throw new RouterUrlNotMatchedException();
+        }
+
+        return $this->replacePlaceholders($this->map[$routeName], $params);
     }
 
     /**
@@ -72,7 +103,9 @@ class Router
     {
         foreach ($this->map as $controller => $urlPattern)
         {
-            if (preg_match($this->compilePattern($urlPattern), $url, $params))
+            $preg_match_pattern = '@' . $this->replacePlaceholders($urlPattern, $this->placeholders) . '@is';
+
+            if (preg_match($preg_match_pattern, $url, $params))
             {
                 $route = $this->config->getClass('Emmetog\Router\Route');
                 $route->setController($controller)
@@ -85,17 +118,15 @@ class Router
         throw new RouterUrlNotMatchedException();
     }
 
-    protected function compilePattern($pattern)
+    protected function replacePlaceholders($pattern, array $placeholders)
     {
         foreach ($this->placeholders as $placeholder => $replacement)
         {
             $pattern = str_replace('<' . $placeholder . '>', $replacement, $pattern);
         }
-
-        $compiledPattern = '@' . $pattern . '@is';
-
-        return $compiledPattern;
+        return $pattern;
     }
+
 }
 
 class RouterException extends \Exception

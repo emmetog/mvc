@@ -2,6 +2,10 @@
 
 namespace Emmetog\Router;
 
+use Emmetog\Config\Config;
+use Emmetog\Config\ConfigForMocking;
+use Emmetog\Cache\NullCache;
+
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/init_test.php';
 
 /**
@@ -14,12 +18,11 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @var Router
      */
     protected $object;
-    
-    
+
     /**
      * The config object.
      * 
-     * @var Emmetog\Config\Config
+     * @var ConfigForMocking
      */
     protected $config;
 
@@ -29,7 +32,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->config = new \Emmetog\Config\ConfigForMocking(APP_ROOT_DIRECTORY.'config/', new \Emmetog\Cache\NullCache());
+        $this->config = new ConfigForMocking(APP_ROOT_DIRECTORY . 'config/', new NullCache());
         $this->object = new Router($this->config);
     }
 
@@ -41,7 +44,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         
     }
-    
+
     /**
      * @covers Emmetog\Router\Router::match
      */
@@ -134,8 +137,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         // Now check if the match() method works.
         $result = $this->object->match($url);
-        
-         $this->assertInstanceOf('\Emmetog\Router\Route', $result);
+
+        $this->assertInstanceOf('\Emmetog\Router\Route', $result);
 
         $this->assertEquals($expectedController, $result->getController());
     }
@@ -148,6 +151,63 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                 'placeholders' => array('domain' => 'example.com'),
                 'url' => 'example.com/test',
                 'expectedController' => 'home/index',
+            ),
+        );
+    }
+
+    /**
+     * @covers Emmetog\Router\Router::map
+     * @covers Emmetog\Router\Router::match
+     * 
+     * @dataProvider generateSimpleUrlsProvider
+     */
+    public function testGeneratingSimpleUrls($map, $placeholders, $url, $controller)
+    {
+        // First we set up the Router with the maps and placeholders.
+        $this->object->setMap($map);
+        $this->object->setPlaceholders($placeholders);
+
+        // Now try generating a url.
+        $result = $this->object->generate($controller);
+
+        $this->assertEquals($url, $result);
+    }
+
+    public function generateSimpleUrlsProvider()
+    {
+        return array(
+            'one simple placeholder' => array(
+                'map' => array('home/index' => '<domain>/test'),
+                'placeholders' => array('domain' => 'example.com'),
+                'url' => 'example.com/test',
+                'controller' => 'home/index',
+            ),
+            'one simple placeholder 2' => array(
+                'map' => array('admin/auth' => '<domain>/secret'),
+                'placeholders' => array('domain' => 'example.com'),
+                'url' => 'example.com/secret',
+                'controller' => 'admin/auth',
+            ),
+            'two simple urls' => array(
+                'map' => array(
+                    'admin/auth' => '<domain>/secret',
+                    'admin/backend' => '<domain>/backend'
+                ),
+                'placeholders' => array('domain' => 'example.com'),
+                'url' => 'example.com/backend',
+                'controller' => 'admin/backend',
+            ),
+            'two placeholder urls' => array(
+                'map' => array(
+                    'admin/auth' => '<domain>/secret/<key>',
+                    'admin/backend' => '<domain>/backend/<key>'
+                ),
+                'placeholders' => array(
+                    'domain' => 'example.com',
+                    'key' => 'hello'
+                    ),
+                'url' => 'example.com/secret/hello',
+                'controller' => 'admin/auth',
             ),
         );
     }

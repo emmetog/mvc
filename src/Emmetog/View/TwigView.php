@@ -77,7 +77,7 @@ class TwigView extends View
 
         if (!is_dir($template_directory))
         {
-            throw new TwigViewTemplateDoesNotExistException('The template directory does not exist!');
+            throw new TwigViewTemplateDoesNotExistException('The template directory ("'.$template_directory.'") does not exist!');
         }
 
         $loader = new \Twig_Loader_Filesystem($template_directory);
