@@ -13,7 +13,7 @@ class TwigView extends View
      * @var array
      */
     protected $assignedVars = array();
-    
+
     /**
      * The template (layout) to use to display the view.
      *
@@ -73,11 +73,17 @@ class TwigView extends View
     public function render()
     {
         // Get the template directory.
-        $template_directory = APP_ROOT_DIRECTORY . 'Template' . DIRECTORY_SEPARATOR;
+        $template_directory = $this->config->getConfiguration('paths', 'template_path');
+
+        if (!is_dir($template_directory))
+        {
+            throw new TwigViewTemplateDoesNotExistException('The template directory does not exist!');
+        }
+
         $loader = new \Twig_Loader_Filesystem($template_directory);
         $options = array();
         $twig = new \Twig_Environment($loader, $options);
-        
+
         if (empty($this->template))
         {
             throw new TwigViewNoTemplateSpecifiedException();
@@ -97,6 +103,11 @@ class TwigViewException extends \Exception
 }
 
 class TwigViewNoTemplateSpecifiedException extends TwigViewException
+{
+    
+}
+
+class TwigViewTemplateDoesNotExistException extends TwigViewException
 {
     
 }
