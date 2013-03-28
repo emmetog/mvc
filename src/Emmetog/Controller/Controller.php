@@ -8,13 +8,15 @@ abstract class Controller
 {
 
     /**
-     *
-     * @var \Apl\Config\Config
+     * The config object.
+     * 
+     * @var Config
      */
     public $config;
 
-    public function __construct(Config $config) {
-	$this->config = $config;
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
     }
 
     abstract protected function build();

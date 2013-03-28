@@ -3,6 +3,8 @@
 namespace Emmetog\Dispatcher;
 
 use Emmetog\Config\Config;
+use Emmetog\Config\ConfigClassNotFoundException;
+use Emmetog\Router\Route;
 
 /**
  * The Dispatcher collects the input parameters and uses the Router to
@@ -33,7 +35,7 @@ class Dispatcher
      * 
      * @param string $controllerClass The fully qualified name (including namespaces) of the controller class to execute.
      */
-    public function dispatch($controllerClass)
+    public function dispatch(Route $route)
     {
 //        $router = new Router();
 //
@@ -59,7 +61,7 @@ class Dispatcher
 
         try
         {
-            $controller = $this->config->getClass($controllerClass);
+            $controller = $this->config->getClass($route->getController());
         }
         catch (ConfigClassNotFoundException $e)
         {
@@ -73,7 +75,8 @@ class Dispatcher
         catch (\Exception $e)
         {
             // TODO: load the '500 internal error' template (dont exit in the exception)
-            echo 'Internal Server Error: ' . $e->getMessage();
+            echo '<h1>Internal Server Error<h1><p>' . $e->getMessage() .'</p>' .PHP_EOL;
+            die;
         }
     }
 
