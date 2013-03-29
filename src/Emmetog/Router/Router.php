@@ -87,7 +87,7 @@ class Router
             throw new RouterUrlNotMatchedException();
         }
 
-        return $this->replacePlaceholders($this->map[$routeName], $params);
+        return 'http://' . $this->replacePlaceholders($this->map[$routeName], $params);
     }
 
     /**

@@ -179,13 +179,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'one simple placeholder' => array(
                 'map' => array('home/index' => '<domain>/test'),
                 'placeholders' => array('domain' => 'example.com'),
-                'url' => 'example.com/test',
+                'url' => 'http://example.com/test',
                 'controller' => 'home/index',
             ),
             'one simple placeholder 2' => array(
                 'map' => array('admin/auth' => '<domain>/secret'),
                 'placeholders' => array('domain' => 'example.com'),
-                'url' => 'example.com/secret',
+                'url' => 'http://example.com/secret',
                 'controller' => 'admin/auth',
             ),
             'two simple urls' => array(
@@ -194,7 +194,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                     'admin/backend' => '<domain>/backend'
                 ),
                 'placeholders' => array('domain' => 'example.com'),
-                'url' => 'example.com/backend',
+                'url' => 'http://example.com/backend',
                 'controller' => 'admin/backend',
             ),
             'two placeholder urls' => array(
@@ -206,7 +206,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                     'domain' => 'example.com',
                     'key' => 'hello'
                     ),
-                'url' => 'example.com/secret/hello',
+                'url' => 'http://example.com/secret/hello',
                 'controller' => 'admin/auth',
             ),
         );
