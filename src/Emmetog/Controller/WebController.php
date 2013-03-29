@@ -45,6 +45,13 @@ abstract class WebController extends Controller
      * @var array
      */
     protected $jsFiles = array();
+    
+    /**
+     * The css files to include.
+     *
+     * @var array
+     */
+    protected $cssFiles = array();
 
     /**
      * Creates a new instance of a controller.
@@ -124,6 +131,16 @@ abstract class WebController extends Controller
     {
         $this->jsFiles[] = $filename;
     }
+    
+    /**
+     * Adds a CSS file to be included in the rendered page.
+     * 
+     * @param string $filename
+     */
+    public function includeCssFile($filename)
+    {
+        $this->cssFiles[] = $filename;
+    }
 
     /**
      * Gets the definition of the cache.
@@ -146,6 +163,7 @@ abstract class WebController extends Controller
         }
         
         $this->view->assign('js_files', $this->jsFiles);
+        $this->view->assign('css_files', $this->cssFiles);
 
         $this->view->setTemplate($template);
 
