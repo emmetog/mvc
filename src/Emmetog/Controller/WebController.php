@@ -38,6 +38,13 @@ abstract class WebController extends Controller
      * @var string
      */
     protected $layout = '';
+    
+    /**
+     * The javascript files to include.
+     *
+     * @var array
+     */
+    protected $jsFiles = array();
 
     /**
      * Creates a new instance of a controller.
@@ -107,6 +114,16 @@ abstract class WebController extends Controller
     {
         $this->viewVariables[$variable] = $value;
     }
+    
+    /**
+     * Adds a JS file to be included in the rendered page.
+     * 
+     * @param string $filename
+     */
+    public function includeJsFile($filename)
+    {
+        $this->jsFiles[] = $filename;
+    }
 
     /**
      * Gets the definition of the cache.
@@ -127,6 +144,8 @@ abstract class WebController extends Controller
         {
             $this->view->assign($variableName, $variableValue);
         }
+        
+        $this->view->assign('js_files', $this->jsFiles);
 
         $this->view->setTemplate($template);
 
