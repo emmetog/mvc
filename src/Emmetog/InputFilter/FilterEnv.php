@@ -25,10 +25,10 @@ class FilterEnv extends InputFilter
     public static function getFilteredInput($key, $filter)
     {
         // Init the inputs on the fly.
-        if (isset($_POST) && !empty($_POST))
+        if (isset($_ENV) && !empty($_ENV))
         {
-            self::setInput($_POST);
-            unset($_POST);
+            self::setInput($_ENV);
+            unset($_ENV);
         }
 
         // First check if we have already filtered the input to save filtering it again.
