@@ -25,6 +25,13 @@ class FilterGet extends InputFilter
      */
     public static function getFilteredInput($key, $filter)
     {
+        // Init the inputs on the fly.
+        if (isset($_GET) && !empty($_GET))
+        {
+            self::setInput($_GET);
+            unset($_GET);
+        }
+
         // First check if we have already filtered the input to save filtering it again.
         if (array_key_exists($key, self::$filteredInputs))
         {
