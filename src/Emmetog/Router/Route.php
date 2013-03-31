@@ -5,11 +5,10 @@ namespace Emmetog\Router;
 class Route
 {
 
-    protected $controller;
-    protected $originalUrl;
-    protected $routeName;
-    protected $parsedParams;
-    protected $requestMethod;
+    protected $controller = '';
+    protected $originalUrl = '';
+    protected $routeName = '';
+    protected $parsedParams = array();
     
     public function setController($controller)
     {

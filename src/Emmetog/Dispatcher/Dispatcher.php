@@ -76,7 +76,7 @@ class Dispatcher
         catch (\Exception $e)
         {
             // TODO: load the '500 internal error' template (dont exit in the exception)
-            echo '<h1>Internal Server Error</h1><p>' . get_class($e) .' '. $e->getMessage() .'</p>' .PHP_EOL;
+            echo '<h1>Internal Server Error</h1><p>' . get_class($e) . ' ' . $e->getMessage() . '</p>' . PHP_EOL;
             die;
         }
     }
