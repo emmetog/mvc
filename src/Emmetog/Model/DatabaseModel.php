@@ -10,7 +10,7 @@ class DatabaseModel extends Model
 {
 
     /**
-     * @var Emmetog\Database\Connection
+     * @var PdoConnection
      */
     protected $db;
 

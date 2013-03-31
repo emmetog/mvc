@@ -8,23 +8,24 @@ abstract class Model
 {
 
     /**
-     * @var Emmetog\Database\Connection
-     */
-    protected $db;
-
-    /**
-     * @var Emmetog\Config\Config
+     * @var Config
      */
     protected $config;
 
     public function __construct(Config $config)
     {
         $this->config = $config;
-        
+
         $this->init();
     }
-    
-    abstract protected function init();
+
+    /**
+     * Performs any initiation, this method can be overridden in children.
+     */
+    protected function init()
+    {
+        
+    }
 
 }
 

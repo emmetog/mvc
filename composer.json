@@ -13,6 +13,7 @@
     "require": {
         "emmetog/config":		    "@dev",
         "emmetog/cache":		    "@dev",
+        "emmetog/database":		    "@dev",
 	"twig/twig":                        "~1.12.0"
     },
     "repositories": [
@@ -23,6 +24,10 @@
 	{
             "type":                         "vcs",
             "url":                          "https://github.com/emmetog/cache.git"
+        },
+	{
+            "type":                         "vcs",
+            "url":                          "https://github.com/emmetog/database.git"
         }
     ],
     "autoload": {
