@@ -80,14 +80,15 @@ class Router
             $this->setPlaceholders($this->config->getConfiguration('url_placeholders'));
         }
 
-//        var_dump($this->map); die;
-
         if (!isset($this->map[$routeName]))
         {
             throw new RouterUrlNotMatchedException();
         }
 
-        return 'http://' . $this->replacePlaceholders($this->map[$routeName], $params);
+        $url = 'http://' . $this->replacePlaceholders($this->map[$routeName]);
+        $url = $this->insertParamPatterns($url, $params);
+
+        return $url;
     }
 
     /**
@@ -103,10 +104,20 @@ class Router
     {
         foreach ($this->map as $controller => $urlPattern)
         {
-            $preg_match_pattern = '@' . $this->replacePlaceholders($urlPattern, $this->placeholders) . '@is';
+            $preg_match_pattern = '@' . $this->replacePlaceholders($urlPattern) . '@is';
+            $preg_match_pattern = $this->constructParamPatterns($preg_match_pattern);
 
             if (preg_match($preg_match_pattern, $url, $params))
             {
+                // We're only interested in the params which have associative keys.
+                foreach ($params as $key => $value)
+                {
+                    if (is_integer($key))
+                    {
+                        unset($params[$key]);
+                    }
+                }
+
                 $route = $this->config->getClass('Emmetog\Router\Route');
                 $route->setController($controller)
                         ->setOriginalUrl($url)
@@ -118,12 +129,36 @@ class Router
         throw new RouterUrlNotMatchedException();
     }
 
-    protected function replacePlaceholders($pattern, array $placeholders)
+    protected function replacePlaceholders($pattern)
     {
+        // Replate the preset placeholders with their real values.
         foreach ($this->placeholders as $placeholder => $replacement)
         {
             $pattern = str_replace('<' . $placeholder . '>', $replacement, $pattern);
         }
+        return $pattern;
+    }
+
+    protected function constructParamPatterns($pattern)
+    {
+        // Make the correct pattern out of any patterns in the url.
+        if (preg_match_all('@\<([a-zA-Z]+):([^\>]+)\>@', $pattern, $patternMatches, PREG_SET_ORDER))
+        {
+            foreach ($patternMatches as $patternMatch)
+            {
+                $pattern = str_replace('<' . $patternMatch[1] . ':' . $patternMatch[2] . '>', '(?<' . $patternMatch[1] . '>' . $patternMatch[2] . ')', $pattern);
+            }
+        }
+        return $pattern;
+    }
+
+    protected function insertParamPatterns($pattern, $params)
+    {
+        foreach ($params as $key => $param)
+        {
+            $pattern = preg_replace('@\<' . $key .'[^\>]*\>@', $param, $pattern);
+        }
+
         return $pattern;
     }
 

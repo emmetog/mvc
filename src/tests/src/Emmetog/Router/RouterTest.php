@@ -37,15 +37,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
      * @covers Emmetog\Router\Router::match
      */
     public function testMatchReturnsRouteObject()
@@ -58,25 +49,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Emmetog\Router\Route', $result);
     }
-
-    /**
-     * @covers Emmetog\Router\Router::map
-     * @covers Emmetog\Router\Router::match
-     * 
-     * @dataProvider simpleUrlsMapAndMatchProvider
-     */
-    public function testSimpleUrlsMapAndMatch($map, $url, $expectedController)
-    {
-        // First we set up the Router with the maps.
-        $this->object->setMap($map);
-
-        // Now check if the match() method works.
-        $result = $this->object->match($url);
-
-        $this->assertEquals($expectedController, $result->getController());
-    }
-
-    public function simpleUrlsMapAndMatchProvider()
+    
+    public function simpleUrlsProvider()
     {
         return array(
             'simple url 1' => array(
@@ -127,23 +101,20 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @covers Emmetog\Router\Router::map
      * @covers Emmetog\Router\Router::match
      * 
-     * @dataProvider placeholderUrlsMapAndMatchProvider
+     * @dataProvider simpleUrlsProvider
      */
-    public function testPlaceholderUrlsMapAndMatch($map, $placeholders, $url, $expectedController)
+    public function testSimpleUrlsMapAndMatch($map, $url, $expectedController)
     {
         // First we set up the Router with the maps.
         $this->object->setMap($map);
-        $this->object->setPlaceholders($placeholders);
 
         // Now check if the match() method works.
         $result = $this->object->match($url);
 
-        $this->assertInstanceOf('\Emmetog\Router\Route', $result);
-
         $this->assertEquals($expectedController, $result->getController());
     }
-
-    public function placeholderUrlsMapAndMatchProvider()
+    
+    public function placeholderUrlsProvider()
     {
         return array(
             'one simple placeholder' => array(
@@ -152,30 +123,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                 'url' => 'example.com/test',
                 'expectedController' => 'home/index',
             ),
-        );
-    }
-
-    /**
-     * @covers Emmetog\Router\Router::map
-     * @covers Emmetog\Router\Router::match
-     * 
-     * @dataProvider generateSimpleUrlsProvider
-     */
-    public function testGeneratingSimpleUrls($map, $placeholders, $url, $controller)
-    {
-        // First we set up the Router with the maps and placeholders.
-        $this->object->setMap($map);
-        $this->object->setPlaceholders($placeholders);
-
-        // Now try generating a url.
-        $result = $this->object->generate($controller);
-
-        $this->assertEquals($url, $result);
-    }
-
-    public function generateSimpleUrlsProvider()
-    {
-        return array(
             'one simple placeholder' => array(
                 'map' => array('home/index' => '<domain>/test'),
                 'placeholders' => array('domain' => 'example.com'),
@@ -205,11 +152,110 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                 'placeholders' => array(
                     'domain' => 'example.com',
                     'key' => 'hello'
-                    ),
+                ),
                 'url' => 'http://example.com/secret/hello',
                 'controller' => 'admin/auth',
             ),
         );
     }
 
+    /**
+     * @covers Emmetog\Router\Router::map
+     * @covers Emmetog\Router\Router::match
+     * 
+     * @dataProvider placeholderUrlsProvider
+     */
+    public function testPlaceholderUrlsMapAndMatch($map, $placeholders, $url, $expectedController)
+    {
+        // First we set up the Router with the maps.
+        $this->object->setMap($map);
+        $this->object->setPlaceholders($placeholders);
+
+        // Now check if the match() method works.
+        $result = $this->object->match($url);
+
+        $this->assertInstanceOf('\Emmetog\Router\Route', $result);
+
+        $this->assertEquals($expectedController, $result->getController());
+    }
+
+    /**
+     * @covers Emmetog\Router\Router::map
+     * @covers Emmetog\Router\Router::match
+     * 
+     * @dataProvider placeholderUrlsProvider
+     */
+    public function testGeneratingSimpleUrls($map, $placeholders, $url, $controller)
+    {
+        // First we set up the Router with the maps and placeholders.
+        $this->object->setMap($map);
+        $this->object->setPlaceholders($placeholders);
+
+        // Now try generating a url.
+        $result = $this->object->generate($controller);
+
+        $this->assertEquals($url, $result);
+    }
+    
+    public function urlsWithVariablesProvider()
+    {
+        return array(
+            'one variable' => array(
+                'map' => array('home/index' => '<domain>/test/<page:[0-9]>'),
+                'placeholders' => array('domain' => 'example.com'),
+                'url' => 'http://example.com/test/5',
+                'controller' => 'home/index',
+                'params' => array('page' => 5),
+            ),
+            'two variables' => array(
+                'map' => array('home/index' => '<domain>/test/<page:[0-9]+>/<title:[a-zA-Z0-9\-]+>'),
+                'placeholders' => array('domain' => 'example.com'),
+                'url' => 'http://example.com/test/57/This-Is-The-Title',
+                'controller' => 'home/index',
+                'params' => array(
+                    'title' => 'This-Is-The-Title',
+                    'page' => 57,
+                ),
+            ),
+        );
+    }
+    
+    /**
+     * @covers Emmetog\Router\Router::map
+     * @covers Emmetog\Router\Router::match
+     * 
+     * @dataProvider urlsWithVariablesProvider
+     */
+    public function testMapAndMatchUrlsWithVariables($map, $placeholders, $url, $controller, $params)
+    {
+        // First we set up the Router with the maps and placeholders.
+        $this->object->setMap($map);
+        $this->object->setPlaceholders($placeholders);
+
+        // Now try generating a url.
+        $result = $this->object->match($url);
+
+        $this->assertInstanceOf('\Emmetog\Router\Route', $result);
+
+        $this->assertEquals($controller, $result->getController());
+        $this->assertEquals($params, $result->getParams());
+    }
+
+    /**
+     * @covers Emmetog\Router\Router::map
+     * @covers Emmetog\Router\Router::match
+     * 
+     * @dataProvider urlsWithVariablesProvider
+     */
+    public function testGeneratingUrlsWithVariables($map, $placeholders, $url, $controller, $params)
+    {
+        // First we set up the Router with the maps and placeholders.
+        $this->object->setMap($map);
+        $this->object->setPlaceholders($placeholders);
+
+        // Now try generating a url.
+        $result = $this->object->generate($controller, $params);
+
+        $this->assertEquals($url, $result);
+    }
 }
