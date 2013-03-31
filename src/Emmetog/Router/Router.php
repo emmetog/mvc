@@ -142,7 +142,7 @@ class Router
     protected function constructParamPatterns($pattern)
     {
         // Make the correct pattern out of any patterns in the url.
-        if (preg_match_all('@\<([a-zA-Z]+):([^\>]+)\>@', $pattern, $patternMatches, PREG_SET_ORDER))
+        if (preg_match_all('@\<([a-zA-Z_\-]+):([^\>]+)\>@', $pattern, $patternMatches, PREG_SET_ORDER))
         {
             foreach ($patternMatches as $patternMatch)
             {
