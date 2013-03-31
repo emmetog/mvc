@@ -70,6 +70,7 @@ class Dispatcher
 
         try
         {
+            $controller->setParams($route->getParams());
             $controller->execute();
         }
         catch (\Exception $e)
