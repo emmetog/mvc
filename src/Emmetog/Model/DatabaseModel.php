@@ -6,6 +6,9 @@ use Emmetog\Model\Model;
 use Emmetog\Database\PdoConnection;
 use Emmetog\Config\ConfigException;
 
+/**
+ * A base class for any Models which access a database.
+ */
 class DatabaseModel extends Model
 {
 
@@ -14,17 +17,12 @@ class DatabaseModel extends Model
      */
     protected $db;
 
-    protected function init() {
-        
+    /**
+     * Sets up the DatabaseModel for use.
+     */
+    protected function init()
+    {
         $this->db = new PdoConnection($this->config);
-        
-        $profile = $this->config->getDatabaseConfig('profile');
-        
-        if(!$profile) {
-            throw new ConfigException('No profile specified in database config file');
-        }
-        
-        $this->db->connect($profile);
     }
 
 }

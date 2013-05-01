@@ -4,17 +4,24 @@ namespace Emmetog\Model;
 
 use Emmetog\Model\Model;
 use Emmetog\Database\ConnectionException;
+use Emmetog\Model\DatabaseModel;
 
-class MockDbModel extends Model
+/**
+ * The Model which is used exclusively by the MockDb object to manage mock tables.
+ */
+class MockDbModel extends DatabaseModel
 {
 
     /**
-     * Gets the query that will recreate the table.
+     * Gets the query that will recreate a table.
      * 
-     * @param string $table
+     * @param string $table The name of the table.
+     * @param string $profile The profile of the original table.
      */
-    public function getCreateTableQuery($table)
+    public function getCreateTableQuery($table, $profile)
     {
+        $this->db->connect($profile);
+
         $query = <<<QUERY
 SHOW CREATE TABLE `:table`
 QUERY;
@@ -22,8 +29,7 @@ QUERY;
         $query = str_replace(':table', $table, $query);
 
         $this->db->prepare(
-                $query,
-                'Gets the query that will recreate the ' . $table . ' table'
+                $query, 'Gets the query that will recreate the ' . $table . ' table'
         );
 
         $result = $this->db->execute();
@@ -35,8 +41,9 @@ QUERY;
 
     /**
      * Creates a temporary table
-     * @param type $table_definition
-     * @return type
+     * 
+     * @param string $table_definition The CREATE TABLE SQL query that will generate the table.
+     * @return boolean True on success, false on failure.
      */
     public function createTable($table_definition)
     {
@@ -45,8 +52,9 @@ QUERY;
         {
             throw new ConnectionException('Invalid CREATE TABLE definition');
         }
-        $table_definition = str_replace('CREATE TABLE',
-                'CREATE TEMPORARY TABLE', $table_definition);
+        $table_definition = str_replace('CREATE TABLE', 'CREATE TEMPORARY TABLE', $table_definition);
+
+        $this->db->connect('test');
 
         $this->db->prepare($table_definition, 'Creating a new temporary table');
 
@@ -86,8 +94,10 @@ QUERY;
             $query .= '), ';
         }
         $query = substr($query, 0, strlen($query) - 2);
-        
-        $this->db->prepare($query, 'Inserting initial mocked data into mocked '.$table_name.' table');
+
+        $this->db->connect('test');
+
+        $this->db->prepare($query, 'Inserting initial mocked data into mocked ' . $table_name . ' table');
 
         $result = $this->db->execute();
 
