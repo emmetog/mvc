@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "75fe8cba622ac18a91e38bd48a8a4f13",
+    "hash": "248f7638a5836efec6659556f0662831",
     "packages": [
         {
             "name": "emmetog/cache",
@@ -89,52 +89,6 @@
             "time": "2013-05-19 19:25:48"
         },
         {
-            "name": "emmetog/database",
-            "version": "v1.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/emmetog/database.git",
-                "reference": "v1.0.0-alpha1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/database/zipball/v1.0.0-alpha1",
-                "reference": "v1.0.0-alpha1",
-                "shasum": ""
-            },
-            "require": {
-                "emmetog/cache": "@dev",
-                "emmetog/config": "@dev"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Emmetog\\Database\\": "src"
-                }
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Emmet O'Grady",
-                    "email": "emmet789@gmail.com"
-                }
-            ],
-            "description": "A library to manage database connections",
-            "keywords": [
-                "connection",
-                "database",
-                "mysql",
-                "pdo"
-            ],
-            "support": {
-                "source": "https://github.com/emmetog/database/tree/master",
-                "issues": "https://github.com/emmetog/database/issues"
-            },
-            "time": "2013-05-01 21:47:20"
-        },
-        {
             "name": "twig/twig",
             "version": "v1.13.0",
             "source": {
@@ -191,9 +145,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "emmetog/database": 15
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],

@@ -13,7 +13,6 @@
     "require": {
         "emmetog/config":		    "~1.0",
         "emmetog/cache":		    "~1.0",
-        "emmetog/database":		    "1.0.*@alpha",
 	"twig/twig":                        "~1.12"
     },
     "repositories": [
@@ -24,16 +23,13 @@
 	{
             "type":                         "vcs",
             "url":                          "https://github.com/emmetog/cache.git"
-        },
-	{
-            "type":                         "vcs",
-            "url":                          "https://github.com/emmetog/database.git"
         }
     ],
     "autoload": {
         "psr-0": {
 	    "Emmetog\\Controller\\": "src",
 	    "Emmetog\\Dispatcher\\": "src",
+	    "Emmetog\\Database\\": "src",
 	    "Emmetog\\Exception\\": "src",
 	    "Emmetog\\InputFilter\\": "src",
 	    "Emmetog\\Model\\": "src",
