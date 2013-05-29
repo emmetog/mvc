@@ -62,8 +62,20 @@ QUERY;
         return $result;
     }
 
-    public function insertDataIntoMockedTable($table_name, $fields, $data)
+    /**
+     * Inserts data into a mocked table.
+     * 
+     * @param string $table_name The name of the table.
+     * @param array $fields The array of field names.
+     * @param array $data The data to insert, in the same order as the field names.
+     */
+    public function insertDataIntoMockedTable($table_name, array $fields, array $data)
     {
+	if (count($data) === 0)
+	{
+	    return;
+	}
+	
         $query = 'INSERT INTO `' . $table_name . '` (';
 
         foreach ($fields as $field)
@@ -98,9 +110,7 @@ QUERY;
 
         $this->db->prepare($query, 'Inserting initial mocked data into mocked ' . $table_name . ' table');
 
-        $result = $this->db->execute();
-
-        return $result;
+        $this->db->execute();
     }
     
     /**
