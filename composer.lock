@@ -1,18 +1,22 @@
 {
-    "hash": "599d5ad032d138fca5f848e9bff29c9b",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "75fe8cba622ac18a91e38bd48a8a4f13",
     "packages": [
         {
             "name": "emmetog/cache",
-            "version": "dev-master",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emmetog/cache.git",
-                "reference": "d03afe9078e868986bfcd13ea5f9af41b540acc9"
+                "reference": "v1.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/cache/zipball/d03afe9078e868986bfcd13ea5f9af41b540acc9",
-                "reference": "d03afe9078e868986bfcd13ea5f9af41b540acc9",
+                "url": "https://api.github.com/repos/emmetog/cache/zipball/v1.0.0",
+                "reference": "v1.0.0",
                 "shasum": ""
             },
             "type": "library",
@@ -30,32 +34,34 @@
                     "email": "emmet789@gmail.com"
                 }
             ],
-            "description": "Classes that act as caches",
+            "description": "A collection of PHP classes which act as caches",
             "keywords": [
-                "cache"
+                "cache",
+                "memecached",
+                "registry"
             ],
             "support": {
-                "source": "https://github.com/emmetog/cache/tree/master",
+                "source": "https://github.com/emmetog/cache/tree/v1.0.0",
                 "issues": "https://github.com/emmetog/cache/issues"
             },
-            "time": "2013-03-28 20:31:46"
+            "time": "2013-05-13 18:40:45"
         },
         {
             "name": "emmetog/config",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emmetog/config.git",
-                "reference": "4cff22560ddd21c9dbe4a7c3016410bea604158d"
+                "reference": "v1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/config/zipball/4cff22560ddd21c9dbe4a7c3016410bea604158d",
-                "reference": "4cff22560ddd21c9dbe4a7c3016410bea604158d",
+                "url": "https://api.github.com/repos/emmetog/config/zipball/v1.1.0",
+                "reference": "v1.1.0",
                 "shasum": ""
             },
             "require": {
-                "emmetog/cache": "@dev"
+                "emmetog/cache": "1.0.*"
             },
             "type": "library",
             "autoload": {
@@ -77,23 +83,23 @@
                 "config"
             ],
             "support": {
-                "source": "https://github.com/emmetog/config/tree/master",
+                "source": "https://github.com/emmetog/config/tree/v1.1.0",
                 "issues": "https://github.com/emmetog/config/issues"
             },
-            "time": "2013-03-28 20:33:08"
+            "time": "2013-05-19 19:25:48"
         },
         {
             "name": "emmetog/database",
-            "version": "dev-master",
+            "version": "v1.0.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emmetog/database.git",
-                "reference": "42eda0264f82771cece092e0981b46dca88124eb"
+                "reference": "v1.0.0-alpha1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/database/zipball/42eda0264f82771cece092e0981b46dca88124eb",
-                "reference": "42eda0264f82771cece092e0981b46dca88124eb",
+                "url": "https://api.github.com/repos/emmetog/database/zipball/v1.0.0-alpha1",
+                "reference": "v1.0.0-alpha1",
                 "shasum": ""
             },
             "require": {
@@ -126,20 +132,20 @@
                 "source": "https://github.com/emmetog/database/tree/master",
                 "issues": "https://github.com/emmetog/database/issues"
             },
-            "time": "2013-03-30 13:25:20"
+            "time": "2013-05-01 21:47:20"
         },
         {
             "name": "twig/twig",
-            "version": "v1.12.2",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
-                "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.12.2"
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "v1.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.2",
-                "reference": "v1.12.2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.13.0",
+                "reference": "v1.13.0",
                 "shasum": ""
             },
             "require": {
@@ -148,7 +154,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -175,7 +181,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-02-09 18:21:53"
+            "time": "2013-05-10 15:12:43"
         }
     ],
     "packages-dev": [
@@ -186,9 +192,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "emmetog/config": 20,
-        "emmetog/cache": 20,
-        "emmetog/database": 20
+        "emmetog/database": 15
     },
     "platform": [
 

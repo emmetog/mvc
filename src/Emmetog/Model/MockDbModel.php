@@ -2,7 +2,6 @@
 
 namespace Emmetog\Model;
 
-use Emmetog\Model\Model;
 use Emmetog\Database\ConnectionException;
 use Emmetog\Model\DatabaseModel;
 
@@ -102,6 +101,16 @@ QUERY;
         $result = $this->db->execute();
 
         return $result;
+    }
+    
+    /**
+     * Gets the PdoConnection object that this model is using to connect to the db.
+     * 
+     * @return PdoConnection
+     */
+    public function getDbObject()
+    {
+	return $this->db;
     }
 
 }

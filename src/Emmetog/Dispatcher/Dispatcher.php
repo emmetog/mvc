@@ -66,6 +66,7 @@ class Dispatcher
         catch (ConfigClassNotFoundException $e)
         {
             echo 'Requested controller does not exist: ' . $e->getMessage();
+            die;
         }
 
         try
