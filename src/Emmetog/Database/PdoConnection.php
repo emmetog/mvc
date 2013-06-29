@@ -188,7 +188,7 @@ class PdoConnection extends Connection
                     break;
                 case Connection::TYPE_RAW:
                     $this->query = str_replace(
-                            ':' . $param['placeholder'], $param['value'], $this->escape((string) $this->query)
+                            ':' . $param['placeholder'], $this->escape((string) $param['value']), $this->query
                     );
                     break;
 
