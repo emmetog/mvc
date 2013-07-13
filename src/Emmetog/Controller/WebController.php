@@ -3,9 +3,7 @@
 namespace Emmetog\Controller;
 
 use Emmetog\Controller\Controller;
-use Emmetog\Router\Route;
 use Emmetog\View\ViewInterface;
-use Emmetog\View\TwigView;
 use Emmetog\Cache\CacheInterface;
 
 abstract class WebController extends Controller
@@ -24,34 +22,20 @@ abstract class WebController extends Controller
      * @var CacheInterface
      */
     protected $cache;
-    
+
     /**
      * The variables to pass to the view.
      *
      * @var array
      */
-    protected $viewVariables = array();
-    
+    protected $assignedVariables = array();
+
     /**
      * The layout template to use in the view.
      *
      * @var string
      */
     protected $layout = '';
-    
-    /**
-     * The javascript files to include.
-     *
-     * @var array
-     */
-    protected $jsFiles = array();
-    
-    /**
-     * The css files to include.
-     *
-     * @var array
-     */
-    protected $cssFiles = array();
 
     /**
      * Creates a new instance of a controller.
@@ -71,6 +55,7 @@ abstract class WebController extends Controller
         $this->cache = $this->config->getCache();
 
         $cacheDefinition = $this->cacheDefinition();
+
         /**
          * @todo Process and implement the cacheDefinition
          */
@@ -93,7 +78,7 @@ abstract class WebController extends Controller
 
         if ($assignedVars)
         {
-            $this->viewVariables = $assignedVars;
+            $this->assignedVariables = $assignedVars;
         }
         else
         {
@@ -104,11 +89,11 @@ abstract class WebController extends Controller
             if ($cacheDefinition)
             {
                 // Save the assigned variables into the cache.
-                $this->cache->set(__CLASS__, serialize($this->viewVariables));
+                $this->cache->set(__CLASS__, serialize($this->assignedVariables));
             }
         }
 
-        $this->render($this->viewVariables, $this->layout);
+        $this->render($this->assignedVariables, $this->layout);
     }
 
     /**
@@ -119,9 +104,9 @@ abstract class WebController extends Controller
      */
     public function assign($variable, $value)
     {
-        $this->viewVariables[$variable] = $value;
+        $this->assignedVariables[$variable] = $value;
     }
-    
+
     /**
      * Adds a JS file to be included in the rendered page.
      * 
@@ -129,9 +114,9 @@ abstract class WebController extends Controller
      */
     public function includeJsFile($filename)
     {
-        $this->jsFiles[] = $filename;
+        $this->assignedVariables['js_files'][] = $filename;
     }
-    
+
     /**
      * Adds a CSS file to be included in the rendered page.
      * 
@@ -139,7 +124,7 @@ abstract class WebController extends Controller
      */
     public function includeCssFile($filename)
     {
-        $this->cssFiles[] = $filename;
+        $this->assignedVariables['css_files'][] = $filename;
     }
 
     /**
@@ -155,16 +140,13 @@ abstract class WebController extends Controller
      */
     protected function render($variables, $template)
     {
-        $this->view = new TwigView($this->config);
+        $this->view = $this->config->getClass('Emmetog\View\TwigView');
 
         foreach ($variables as $variableName => $variableValue)
         {
             $this->view->assign($variableName, $variableValue);
         }
         
-        $this->view->assign('js_files', $this->jsFiles);
-        $this->view->assign('css_files', $this->cssFiles);
-
         $this->view->setTemplate($template);
 
         $this->view->render();
@@ -185,10 +167,31 @@ abstract class WebController extends Controller
     {
         $this->layout = $layout;
     }
+    
+    /**
+     * Returns the layout template to be rendered.
+     * 
+     * @return string The layout template.
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Returns the variables that have been assigned to the view.
+     * 
+     * @return array The array of view variables.
+     */
+    public function getAssignedVariables()
+    {
+        return $this->assignedVariables;
+    }
 
 }
 
-class WebControllerException extends \Exception {
+class WebControllerException extends \Exception
+{
     
 }
 
