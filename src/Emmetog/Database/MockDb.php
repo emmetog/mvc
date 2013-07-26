@@ -25,7 +25,7 @@ class MockDb
      */
     private $mockDbModelTest;
 
-    const INPUT_FORMAT_ARRAY   = 500;
+    const INPUT_FORMAT_ARRAY = 500;
     const INPUT_FORMAT_CONSOLE = 501;
 
     /**
@@ -59,7 +59,7 @@ class MockDb
      * @param string $profile The profile of the table to mock, defaults to the "default" profile.
      * @throws MockDbInvalidInputFormatException If an unknown input format is specified.
      */
-    public function mockTable($table_name, $data, $input_format = self::INPUT_FORMAT_ARRAY, $profile = 'default')
+    public function mockTable($table_name, $data = array(), $input_format = self::INPUT_FORMAT_ARRAY, $profile = 'default')
     {
         switch ($input_format)
         {
@@ -80,14 +80,22 @@ class MockDb
 
         $result = $this->mockDbModelTest->createTable($create_table_query);
 
-        $result = $this->mockDbModelTest->insertDataIntoMockedTable($table_name, $data['fields'], $data['data']);
+        if (!empty($data))
+        {
+            if (!isset($data['fields']) || !isset($data['data']) || !is_array($data['fields']) || !is_array($data['data']))
+            {
+                throw new MockDbException('Cant insert mocked data: "field" and "data" must be arrays');
+            }
+            
+            $this->mockDbModelTest->insertDataIntoMockedTable($table_name, $data['fields'], $data['data']);
+        }
     }
 
     private function parseInputFormatConsole($data)
     {
         throw new MockDbInvalidInputFormatException('The INPUT_FORMAT_CONSOLE format is not yet implemented');
     }
-    
+
     /**
      * Gets the PdoConnection object that is being used to connect to the database.
      * 
@@ -95,7 +103,7 @@ class MockDb
      */
     public function getTestDbObject()
     {
-	return $this->mockDbModelTest->getDbObject();
+        return $this->mockDbModelTest->getDbObject();
     }
 
 }
