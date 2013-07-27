@@ -78,7 +78,7 @@ class MockDb
          */
         $create_table_query = $this->mockDbModelReal->getCreateTableQuery($table_name, $profile);
 
-        $result = $this->mockDbModelTest->createTable($create_table_query);
+        $this->mockDbModelTest->createTable($create_table_query);
 
         if (!empty($data))
         {

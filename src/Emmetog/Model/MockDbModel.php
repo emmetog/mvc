@@ -2,6 +2,7 @@
 
 namespace Emmetog\Model;
 
+use Emmetog\Database\Connection;
 use Emmetog\Database\ConnectionException;
 use Emmetog\Model\DatabaseModel;
 
@@ -52,7 +53,8 @@ QUERY;
             throw new ConnectionException('Invalid CREATE TABLE definition');
         }
         $table_definition = str_replace('CREATE TABLE', 'CREATE TEMPORARY TABLE', $table_definition);
-
+        $table_definition = preg_replace('@AUTO_INCREMENT=\d+@', 'AUTO_INCREMENT=1', $table_definition);
+        
         $this->db->connect('test');
 
         $this->db->prepare($table_definition, 'Creating a new temporary table');
@@ -61,7 +63,7 @@ QUERY;
 
         return $result;
     }
-
+    
     /**
      * Inserts data into a mocked table.
      * 
