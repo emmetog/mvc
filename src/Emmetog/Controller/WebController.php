@@ -38,16 +38,6 @@ abstract class WebController extends Controller
     protected $layout = '';
 
     /**
-     * Creates a new instance of a controller.
-     * 
-     * @param Config $config The config object.
-     */
-    public function __construct($config)
-    {
-        parent::__construct($config);
-    }
-
-    /**
      * Executes the controller.
      */
     final public function execute()

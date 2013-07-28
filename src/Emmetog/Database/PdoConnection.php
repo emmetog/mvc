@@ -28,11 +28,6 @@ class PdoConnection extends Connection
     );
 
     /**
-     * @var \PDO
-     */
-    private $pdo;
-
-    /**
      * @var \PDOStatement
      */
     private $statement;

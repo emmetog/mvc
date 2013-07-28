@@ -2,7 +2,6 @@
 
 namespace Emmetog\Model;
 
-use Emmetog\Database\Connection;
 use Emmetog\Database\ConnectionException;
 use Emmetog\Model\DatabaseModel;
 

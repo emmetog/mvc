@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "248f7638a5836efec6659556f0662831",
+    "hash": "3d24c0f082d31fd76665985fe22c47a9",
     "packages": [
         {
             "name": "emmetog/cache",
@@ -48,20 +48,21 @@
         },
         {
             "name": "emmetog/config",
-            "version": "v1.1.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emmetog/config.git",
-                "reference": "v1.1.0"
+                "reference": "v2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/config/zipball/v1.1.0",
-                "reference": "v1.1.0",
+                "url": "https://api.github.com/repos/emmetog/config/zipball/v2.0.0",
+                "reference": "v2.0.0",
                 "shasum": ""
             },
             "require": {
-                "emmetog/cache": "1.0.*"
+                "emmetog/cache": "~1.0",
+                "php": "~5.4"
             },
             "type": "library",
             "autoload": {
@@ -69,6 +70,7 @@
                     "Emmetog\\Config\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0"
             ],
@@ -82,24 +84,20 @@
             "keywords": [
                 "config"
             ],
-            "support": {
-                "source": "https://github.com/emmetog/config/tree/v1.1.0",
-                "issues": "https://github.com/emmetog/config/issues"
-            },
-            "time": "2013-05-19 19:25:48"
+            "time": "2013-07-28 17:33:46"
         },
         {
             "name": "twig/twig",
-            "version": "v1.13.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "v1.13.0"
+                "reference": "v1.13.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.13.0",
-                "reference": "v1.13.0",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.13.1",
+                "reference": "v1.13.1",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +133,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-05-10 15:12:43"
+            "time": "2013-06-06 06:06:01"
         }
     ],
     "packages-dev": [

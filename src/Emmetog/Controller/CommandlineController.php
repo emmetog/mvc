@@ -17,11 +17,6 @@ abstract class CommandlineController extends Controller
         'yellow' => "\033[1;33m",
     );
 
-    public function __construct($config)
-    {
-        parent::__construct($config);
-    }
-
     final public function execute()
     {
         $this->build();

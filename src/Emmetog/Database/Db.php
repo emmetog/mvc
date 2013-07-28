@@ -19,12 +19,8 @@ class Db
         if (!isset(self::$connections[$key]))
         {
             self::$connections[$key] = new \PDO(
-                            'mysql:host=' . $host . ';dbname=' . $database,
-                            $username, $password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
+                    'mysql:host=' . $host . ';dbname=' . $database, $username, $password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
             );
-//            self::$connections[$key]->connect(
-//                    $host, $database, $username, $password
-//            );
         }
 
         return self::$connections[$key];

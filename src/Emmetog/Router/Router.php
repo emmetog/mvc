@@ -2,11 +2,12 @@
 
 namespace Emmetog\Router;
 
-use Emmetog\Router\Route;
-use Emmetog\Config\Config;
+use Emmetog\Config\HasConfig;
 
 class Router
 {
+
+    use HasConfig;
 
     /**
      * The map of patterns to controllers.
@@ -21,23 +22,6 @@ class Router
      * @var array
      */
     private $placeholders = array();
-
-    /**
-     * The config object.
-     * 
-     * @var Config
-     */
-    private $config;
-
-    /**
-     * Creates a new instance of the Router.
-     * 
-     * @param Config $config
-     */
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
 
     /**
      * Sets the map which relates controllers to url patterns.
@@ -156,7 +140,7 @@ class Router
     {
         foreach ($params as $key => $param)
         {
-            $pattern = preg_replace('@\<' . $key .'[^\>]*\>@', $param, $pattern);
+            $pattern = preg_replace('@\<' . $key . '[^\>]*\>@', $param, $pattern);
         }
 
         return $pattern;

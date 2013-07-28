@@ -2,18 +2,11 @@
 
 namespace Emmetog\Controller;
 
-use Emmetog\Config\Config;
+use Emmetog\Config\HasConfig;
 
 abstract class Controller
 {
 
-    /**
-     * The config object.
-     * 
-     * @var Config
-     */
-    public $config;
-    
     /**
      * The params that were passed to the controller from the Router.
      *
@@ -21,11 +14,6 @@ abstract class Controller
      */
     private $params;
 
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
-    
     public function setParams(array $params)
     {
         $this->params = $params;

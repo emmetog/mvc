@@ -4,7 +4,6 @@ namespace Emmetog\Model;
 
 use Emmetog\Model\Model;
 use Emmetog\Database\PdoConnection;
-use Emmetog\Config\ConfigException;
 
 /**
  * A base class for any Models which access a database.

@@ -3,10 +3,12 @@
 namespace Emmetog\Database;
 
 use Emmetog\Database\ConnectionInterface;
-use Emmetog\Config\Config;
+use Emmetog\Config\HasConfig;
 
 abstract class Connection implements ConnectionInterface
 {
+
+    use HasConfig;
 
     const TYPE_INTEGER = 101;
     const TYPE_STRING = 102;
@@ -14,16 +16,6 @@ abstract class Connection implements ConnectionInterface
     const TYPE_BOOLEAN = 104;
     const TYPE_IDENTIFIER = 105;
     const TYPE_RAW = 106;
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    final public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
 
 }
 

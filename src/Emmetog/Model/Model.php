@@ -2,20 +2,15 @@
 
 namespace Emmetog\Model;
 
-use Emmetog\Config\Config;
+use Emmetog\Config\HasConfig;
 
 abstract class Model
 {
 
-    /**
-     * @var Config
-     */
-    protected $config;
+    use HasConfig;
 
-    public function __construct(Config $config)
+    public function __construct()
     {
-        $this->config = $config;
-
         $this->init();
     }
 
