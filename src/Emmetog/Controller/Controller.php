@@ -7,6 +7,8 @@ use Emmetog\Config\HasConfig;
 abstract class Controller
 {
 
+    use HasConfig;
+
     /**
      * The params that were passed to the controller from the Router.
      *
@@ -18,7 +20,7 @@ abstract class Controller
     {
         $this->params = $params;
     }
-    
+
     public function getParams()
     {
         return $this->params;
