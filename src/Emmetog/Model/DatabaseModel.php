@@ -21,7 +21,12 @@ class DatabaseModel extends Model
      */
     protected function init()
     {
-        $this->db = new PdoConnection($this->config);
+        /*
+         * We don't use the config to create the PdoConnection object because
+         * if we did it would complain of 'unmocked model' errors in UTs.
+         */
+        $this->db = new PdoConnection();
+        $this->db->setConfig($this->config);
     }
 
 }

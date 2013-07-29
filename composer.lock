@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3d24c0f082d31fd76665985fe22c47a9",
+    "hash": "b1639352e0608a28709791db0901a1d6",
     "packages": [
         {
             "name": "emmetog/cache",
@@ -48,16 +48,16 @@
         },
         {
             "name": "emmetog/config",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emmetog/config.git",
-                "reference": "v2.0.0"
+                "reference": "v2.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emmetog/config/zipball/v2.0.0",
-                "reference": "v2.0.0",
+                "url": "https://api.github.com/repos/emmetog/config/zipball/v2.1.0",
+                "reference": "v2.1.0",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
             "keywords": [
                 "config"
             ],
-            "time": "2013-07-28 17:33:46"
+            "time": "2013-07-29 19:42:09"
         },
         {
             "name": "twig/twig",

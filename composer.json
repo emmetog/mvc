@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "emmetog/config":		    "~2.0",
+        "emmetog/config":		    "~2.1",
         "emmetog/cache":		    "~1.0",
 	"twig/twig":                        "~1.12"
     },

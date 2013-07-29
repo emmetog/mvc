@@ -46,8 +46,11 @@ class MockDb
             $real_config = new Config($config->getConfigDirectory(), $config->getCache());
         }
 
-        $this->mockDbModelReal = new MockDbModel($real_config);
-        $this->mockDbModelTest = new MockDbModel($this->config);
+        $this->mockDbModelReal = new MockDbModel();
+        $this->mockDbModelReal->setConfig($real_config);
+        
+        $this->mockDbModelTest = new MockDbModel();
+        $this->mockDbModelTest->setConfig($this->config);
     }
 
     /**
