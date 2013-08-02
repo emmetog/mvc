@@ -25,6 +25,7 @@
                     "Emmetog\\Cache\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0"
             ],
@@ -40,10 +41,6 @@
                 "memecached",
                 "registry"
             ],
-            "support": {
-                "source": "https://github.com/emmetog/cache/tree/v1.0.0",
-                "issues": "https://github.com/emmetog/cache/issues"
-            },
             "time": "2013-05-13 18:40:45"
         },
         {

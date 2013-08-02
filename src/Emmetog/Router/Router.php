@@ -88,7 +88,7 @@ class Router
     {
         foreach ($this->map as $controller => $urlPattern)
         {
-            $preg_match_pattern = '@' . $this->replacePlaceholders($urlPattern) . '@is';
+            $preg_match_pattern = '@^' . $this->replacePlaceholders($urlPattern) . '$@is';
             $preg_match_pattern = $this->constructParamPatterns($preg_match_pattern);
 
             if (preg_match($preg_match_pattern, $url, $params))

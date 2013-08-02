@@ -33,7 +33,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->config = new ConfigForMocking(APP_ROOT_DIRECTORY . 'config/', new NullCache());
-        $this->object = new Router($this->config);
+        $this->object = new Router();
+		$this->object->setConfig( $this->config );
+		$this->config->setUnmockedClassesAllowed( true );
     }
 
     /**
@@ -85,34 +87,58 @@ class RouterTest extends \PHPUnit_Framework_TestCase
                 'url' => 'example.com/admin/backend',
                 'expectedController' => 'admin/backend',
             ),
-            'simple map with a preg_match' => array(
-                'map' => array(
-                    'search/list' => 'example.com/search/page',
-                    'admin/backend' => 'example.com/admin/backend',
-                    'home/index' => 'example.com/test',
-                ),
-                'url' => 'example.com/admin/backend',
-                'expectedController' => 'admin/backend',
-            ),
+			'simple map with a preg_match' => array(
+				'map' => array(
+					'search/list' => 'example.com/search/page',
+					'admin/backend' => 'example.com/admin/backend',
+					'home/index' => 'example.com/test',
+				),
+				'url' => 'example.com/admin/backend',
+				'expectedController' => 'admin/backend',
+			)
         );
     }
 
-    /**
-     * @covers Emmetog\Router\Router::map
-     * @covers Emmetog\Router\Router::match
-     * 
-     * @dataProvider simpleUrlsProvider
-     */
-    public function testSimpleUrlsMapAndMatch($map, $url, $expectedController)
-    {
-        // First we set up the Router with the maps.
-        $this->object->setMap($map);
+	/**
+	 * @covers Emmetog\Router\Router::map
+	 * @covers Emmetog\Router\Router::match
+	 *
+	 * @dataProvider simpleUrlsProvider
+	 */
+	public function testSimpleUrlsMapAndMatch($map, $url, $expectedController)
+	{
+		// First we set up the Router with the maps.
+		$this->object->setMap($map);
 
-        // Now check if the match() method works.
-        $result = $this->object->match($url);
+		// Now check if the match() method works.
+		$result = $this->object->match($url);
 
-        $this->assertEquals($expectedController, $result->getController());
-    }
+		$this->assertEquals($expectedController, $result->getController());
+	}
+
+	/**
+	 * @covers Emmetog\Router\Router::map
+	 * @covers Emmetog\Router\Router::match
+	 *
+	 * @dataProvider simpleUrlsProvider
+	 */
+	public function testPatternMatchesExactly()
+	{
+		$this->setExpectedException( 'Emmetog\Router\RouterUrlNotMatchedException' );
+
+		$map = array(
+			'search/list' => 'example.com/search/page',
+			'admin/backend' => 'example.com',
+		);
+
+		$url_under_test = 'example.com/test';
+
+		// First we set up the Router with the maps.
+		$this->object->setMap($map);
+
+		// Now check if the match() method works.
+		$this->object->match($url_under_test);
+	}
     
     public function placeholderUrlsProvider()
     {
