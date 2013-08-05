@@ -32,7 +32,7 @@ QUERY;
         );
 
         $result = $this->db->execute();
-
+        
         $create_table_query = $result['Create Table'];
 
         return $create_table_query;
@@ -53,6 +53,11 @@ QUERY;
         }
         $table_definition = str_replace('CREATE TABLE', 'CREATE TEMPORARY TABLE', $table_definition);
         $table_definition = preg_replace('@AUTO_INCREMENT=\d+@', 'AUTO_INCREMENT=1', $table_definition);
+        
+        /*
+         * Remove any foreign keys; they aren't allowed in temporary tables.
+         */
+        $table_definition = preg_replace('@,\n\s*CONSTRAINT `[^`]+` FOREIGN KEY [^\n,]+@', '', $table_definition);
         
         $this->db->connect('test');
 

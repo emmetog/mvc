@@ -14,6 +14,7 @@ class PdoConnection extends Connection
     private $readQueryTypes = array(
         'show tables',
         'show create table',
+        'show',
         'select',
     );
     private $writeQueryTypes = array(
@@ -230,6 +231,7 @@ class PdoConnection extends Connection
             {
 
                 case 'select':
+                case 'show':
                 case 'show tables':
                     $return = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
                     break;
